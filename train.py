@@ -19,7 +19,7 @@ def train_SRFBN(datas, sess, cfg):
     with tf.control_dependencies(update_ops):
         gs_vs = optimizer.compute_gradients(srfbn.losses)
         with tf.device("/cpu:0"):
-            train_op = optimizer.apply_gradients(grads_and_vars=gs_vs)
+            train_op = optimizer.apply_gradients(grads_and_vars=gs_vs, global_step=step)
 
     tf.global_variables_initializer().run(session=sess)
 
@@ -58,18 +58,6 @@ def train_SRFBN(datas, sess, cfg):
         it = 0
         ep += 1
 
-def train_RDN():
-    pass
-
-def train_DNDB():
-    pass
-
-def train_DB():
-    pass
-
-def train_DN():
-    pass
-
 def train(*args, **kwargs):
     txtfiles = kwargs["imgtxts"]
     imgs = []
@@ -78,38 +66,15 @@ def train(*args, **kwargs):
         tmp = f.readlines()
         imgs.extend(tmp)
         f.close()
-    net_type = kwargs["net_type"]
 
     sess = tf.compat.v1.Session()
 
     ## build NetWork
-    if net_type=="RDN":
-        from config import RDN_config
-        cfg = RDN_config()
-        datas = imgs
-        train_RDN(datas, sess, cfg)
-    elif net_type=="SRFBN":
-        from config import SRFBN_config
-        cfg = SRFBN_config()
-        datas = imgs
-        train_SRFBN(datas, sess, cfg)
-    elif net_type=="DNDB":
-        from config import DNDB_config
-        cfg = DNDB_config()
-        datas = imgs
-        train_DNDB(datas, sess, cfg)
-    elif net_type=="DN":
-        from config import DN_config
-        cfg = DN_config()
-        datas = imgs
-        train_DN(datas, sess, cfg)
-    elif net_type=="DB":
-        from config import DB_config
-        cfg = DB_config()
-        datas = imgs
-        train_DB(datas, sess, cfg)
-    else:
-        raise NotImplementedError('[ERROR] Net type [%s] is not implemented!' % net_type)
+    from config import SRFBN_config
+    cfg = SRFBN_config()
+    datas = imgs
+    train_SRFBN(datas, sess, cfg)
+
 
 
 if __name__ == '__main__':
@@ -117,4 +82,4 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     imgtxts = [r"E:\Open_Datasets/SR_Images.txt"]
 
-    train(imgtxts=imgtxts, net_type="SRFBN")
+    train(imgtxts=imgtxts)
