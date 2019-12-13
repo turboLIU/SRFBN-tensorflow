@@ -68,15 +68,6 @@ class SRFBN(basic_network):
 
         return x
 
-    def Meanshift(self):
-        pass
-
-    def sub_mean(self, x):
-        return (x - 127.5) / 128
-
-    def add_mean(self, x):
-        return x * 128 + 127.5
-
     def build(self):
         if self.cfg.scale == 2:
             stride = 2
@@ -119,10 +110,10 @@ class SRFBN(basic_network):
 
     def train_step(self):
         self.build()
+        print("This Net has Params num is %f MB" % (self.params_count * 4 / 1024 / 1024))  # float32
         tf.summary.image("image/HR", self.labelplaceholder, max_outputs=1)
         out = tf.add_n(self.outs)/self.cfg.num_steps
-        # out = tf.reduce_mean(out, axis=-1, keepdims=True)
-        # out = tf.image.per_image_standardization(out)
+
         tf.summary.image("image/SR", out, max_outputs=1)
         tf.summary.image("image/LR", self.imageplaceholder, max_outputs=1)
 
@@ -156,7 +147,9 @@ class SRFBN(basic_network):
 
     def save(self, step):
         model_name = "SRFBN.model"
-        model_dir = "%s_%s_%s_%s_c%d_x%s" % ("SRFBN", self.cfg.num_features, self.cfg.num_steps, self.cfg.num_groups, self.cfg.c_dim, self.cfg.scale)
+        model_dir = "%s_%s_%s_%s_c%d_x%s" % \
+                    ("SRFBN", self.cfg.num_features, self.cfg.num_steps,
+                     self.cfg.num_groups, self.cfg.c_dim, self.cfg.scale)
         checkpoint_dir = os.path.join(self.cfg.checkpoint_dir, model_dir)
 
         if not os.path.exists(checkpoint_dir):

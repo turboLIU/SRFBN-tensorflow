@@ -6,7 +6,7 @@ class basic_network(object):
     def __init__(self, cfg):
         self.training=True
         self.cfg = cfg
-
+        self.params_count = 0
     def init_params(self, *args, **kwargs):
         def _variable_on_cpu(w_shape, b_shape, weight_decay=0.99, use_bias=True, name="conv"):
             with tf.device("/cpu:0"):
@@ -21,6 +21,8 @@ class basic_network(object):
         w_shape = [kernel_size, kernel_size, in_channels, out_channels]
         b_shape = [out_channels]
         name = kwargs["name"]
+        self.params_count += kernel_size*kernel_size*in_channels*out_channels
+        self.params_count += out_channels
         return _variable_on_cpu(w_shape, b_shape, use_bias=kwargs["use_bias"], name=name)
 
     def calc_loss(self, *args, **kwargs):
