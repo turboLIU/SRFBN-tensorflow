@@ -60,7 +60,12 @@ This repository is TensorFlow code for my proposed SRFBN.
 ### Performance
 
 <p align="center">
-    <img src=".github/media/pose_face_hands.gif" width="480">
+    <img src="https://github.com/turboLIU/SRFBN-tensorflow/blob/master/city.gif" width="960">
+    <br>
+</p>
+
+<p align="center">
+    <img src="https://github.com/turboLIU/SRFBN-tensorflow/blob/master/country.gif" width="960">
     <br>
 </p>
 
