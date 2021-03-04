@@ -57,6 +57,13 @@ This repository is TensorFlow code for my proposed SRFBN.
    把图片路径保存成txt文件中，格式如上描述，修改train.py中的imgtxts参数即可
    ```
 
+### Performance
+
+<p align="center">
+    <img src=".github/media/pose_face_hands.gif" width="480">
+    <br>
+</p>
+
 #### Test on standard SR benchmark
 
 1. Test
