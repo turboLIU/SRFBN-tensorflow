@@ -71,9 +71,7 @@ This repository is TensorFlow code for my proposed SRFBN.
 ## 记得点赞哦亲~
 
 # Most Important！！！
-## if it helps you a lot, please support me :
-#####![](https://github.com/turboLIU/pay/blob/master/AliPay.jpg)
-#####![](https://github.com/turboLIU/pay/blob/master/WeChat.jpg)
+## if it helps you a lot, please support me
 
 
 
